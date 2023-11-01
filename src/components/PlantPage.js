@@ -17,11 +17,32 @@ function PlantPage() {
     setPlants([...plants, plantObj]);
   }
 
+  function handleDelete(plantId) {
+    const updatedPlants = plants.filter((plant) => {
+      if (plant.id === plantId) return false;
+      return true;
+    });
+    setPlants(updatedPlants);
+  }
+
+  function handlePriceChange(newPrice, id) {
+    const updatedPlants = plants.map((plant) => {
+      if (plant.id === id) return { ...plant, price: newPrice };
+      return plant;
+    });
+    setPlants(updatedPlants);
+  }
+
   return (
     <main>
       <NewPlantForm onAddPlant={addPlant} />
       <Search search={search} onSearch={setSearch} />
-      <PlantList plants={plants} search={search} />
+      <PlantList
+        plants={plants}
+        search={search}
+        onDelete={handleDelete}
+        onPriceChange={handlePriceChange}
+      />
     </main>
   );
 }
